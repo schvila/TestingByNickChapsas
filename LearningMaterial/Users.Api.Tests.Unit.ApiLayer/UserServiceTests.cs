@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Castle.Core.Logging;
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
@@ -14,7 +12,7 @@ using Users.Api.Repositories;
 using Users.Api.Services;
 using Xunit;
 
-namespace Users.Api.Tests.Unit;
+namespace Users.Api.Tests.Unit.ApiLayer;
 
 public class UserServiceTests
 {

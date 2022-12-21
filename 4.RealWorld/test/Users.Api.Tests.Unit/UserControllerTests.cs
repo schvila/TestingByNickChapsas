@@ -87,7 +87,7 @@ public class UserControllerTests
 
         // Act
         var result = (OkObjectResult)await _sut.GetAll();
-
+ 
         // Assert
         result.StatusCode.Should().Be(200);
         result.Value.As<IEnumerable<UserResponse>>().Should().BeEquivalentTo(usersResponse);
