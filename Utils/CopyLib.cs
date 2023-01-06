@@ -14,9 +14,15 @@ public class CopyLib
             DateFormatHandling = DateFormatHandling.IsoDateFormat,
             //DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fff'Z'"
         };
+        // var dateConverter = new Newtonsoft.Json.Converters.IsoDateTimeConverter 
+        // { 
+        //     DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fff'Z'" 
+        // };
+        // settings.Converters.Add(dateConverter);
+        settings.Converters.Add(new StringEnumConverter());
+        
         var data = JsonConvert.SerializeObject(obj, settings);
 
-        settings.Converters.Add(new StringEnumConverter());
         return JsonConvert.DeserializeObject<T>(data, settings);
 
     }
