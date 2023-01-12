@@ -32,8 +32,8 @@ public class CheckServicePostTests
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
     [Theory]
-    //[MemberData(nameof(Data))]
-    [InlineData("050")]
+    [MemberData(nameof(SazkaGames))]
+    //[InlineData("050")]
     public async Task SazkaStage(string idGame)
     {
         string envUrl = "stagesazka.adell-trading.cz/G";
