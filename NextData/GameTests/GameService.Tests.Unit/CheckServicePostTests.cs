@@ -38,12 +38,23 @@ public class CheckServicePostTests
     //[InlineData("050")]
     public async Task SazkaStage(string idGame)
     {
-        string envUrl = "stagesazka.adell-trading.cz/G";
+        string envUrl = "stagekartac.adell-trading.cz/G";
         string url = $"https://{envUrl}{idGame}/Game{idGame}Service.svc/CheckService";
         var response = await _client.PostAsync(url,_body);
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
+    [Theory]
+    [MemberData(nameof(KartacCfgGames))]
+    //[InlineData("050")]
+    public async Task KartacStage(string idGame)
+    {
+        string envUrl = "stagesazka.adell-trading.cz/G";
+        string url = $"https://{envUrl}{idGame}/Game{idGame}Service.svc/CheckService";
+        var response = await _client.PostAsync(url,_body);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+    
     public static IEnumerable<object[]> AllGames =>
         new List<object[]>
         {
@@ -125,6 +136,15 @@ public class CheckServicePostTests
     }    
     public static IEnumerable<object[]> SazkaCfgGames() {
         var allGamesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SazkaGames.txt");
+        var text = File.ReadAllText(allGamesPath);
+        var games = text.Split(';');
+        
+        foreach(var game in games.Where(g=> !string.IsNullOrEmpty(g))) {
+            yield return new object[] { game };
+        }
+    }    
+    public static IEnumerable<object[]> KartacCfgGames() {
+        var allGamesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "KartacGames.txt");
         var text = File.ReadAllText(allGamesPath);
         var games = text.Split(';');
         
