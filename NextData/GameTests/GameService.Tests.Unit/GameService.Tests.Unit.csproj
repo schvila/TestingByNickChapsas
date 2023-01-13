@@ -23,4 +23,13 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="AllGames.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="SazkaGames.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

@@ -11,7 +11,7 @@ public class CheckServiceGetPostTests
     private readonly HttpClient _client;
     private HttpContent _body;
     private readonly ITestOutputHelper _testOutputHelper;
-    private static int _delay = 1000;
+    private static int _delay = 500;
 
     public CheckServiceGetPostTests(ITestOutputHelper testOutputHelper)
     {

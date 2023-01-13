@@ -1,6 +1,7 @@
 using System.Net;
 using FluentAssertions;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace GameService.Tests.Unit;
 
@@ -22,7 +23,8 @@ public class CheckServicePostTests
     }
 
     [Theory]
-    [MemberData(nameof(AllGames))]
+    [MemberData(nameof(AllCfgGames))]
+    //[InlineData("003")]
     public async Task NextDataDev(string idGame)
     {
         await Task.Delay(_delay);
@@ -32,7 +34,7 @@ public class CheckServicePostTests
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
     [Theory]
-    [MemberData(nameof(SazkaGames))]
+    [MemberData(nameof(SazkaCfgGames))]
     //[InlineData("050")]
     public async Task SazkaStage(string idGame)
     {
@@ -100,38 +102,34 @@ public class CheckServicePostTests
             new object[] { "017" },
             new object[] { "018" },
             new object[] { "019" },
-            //new object[] { "029" },
             new object[] { "030" },
             new object[] { "031" },
             new object[] { "032" },
             new object[] { "033" },
             new object[] { "034" },
             new object[] { "035" },
-            // new object[] { "036" },
-            // new object[] { "037" },
-            // new object[] { "038" },
             new object[] { "039" },
-            // new object[] { "040" },
-            // new object[] { "041" },
-            // new object[] { "042" },
-            // new object[] { "043" },
-            // new object[] { "044" },
-            // new object[] { "045" },
-            // new object[] { "047" },
-            // new object[] { "048" },
-            // new object[] { "049" },
-            // new object[] { "050" },
-            // new object[] { "051" },
-            // new object[] { "052" },
-            // new object[] { "053" },
-            // new object[] { "054" },
-            // new object[] { "055" },
-            // new object[] { "056" },
-            // new object[] { "057" },
-            // new object[] { "058" },
             new object[] { "101" },
             new object[] { "102" },
             new object[] { "105" },
             new object[] { "106" },
         };
+    public static IEnumerable<object[]> AllCfgGames() {
+        var allGamesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AllGames.txt");
+        var text = File.ReadAllText(allGamesPath);
+        var games = text.Split(';');
+        
+        foreach(var game in games.Where(g=> !string.IsNullOrEmpty(g))) {
+            yield return new object[] { game };
+        }
+    }    
+    public static IEnumerable<object[]> SazkaCfgGames() {
+        var allGamesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SazkaGames.txt");
+        var text = File.ReadAllText(allGamesPath);
+        var games = text.Split(';');
+        
+        foreach(var game in games.Where(g=> !string.IsNullOrEmpty(g))) {
+            yield return new object[] { game };
+        }
+    }    
 }
