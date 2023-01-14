@@ -6,7 +6,7 @@ using System.Reflection;
 namespace GameService.Tests.Unit;
 
 
-public class CheckServicePostTests
+public class CheckServiceTests
 {
     private readonly HttpClient _client;
     private HttpContent _body;
