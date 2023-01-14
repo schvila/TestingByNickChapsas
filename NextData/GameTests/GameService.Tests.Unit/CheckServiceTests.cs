@@ -5,14 +5,15 @@ using System.Reflection;
 
 namespace GameService.Tests.Unit;
 
-
+//V podstate se jedna o integracni testy, protoze komunikujeme se sluzbou
 public class CheckServiceTests
 {
     private readonly HttpClient _client;
     private HttpContent _body;
     private static int _delay = 1000;
+    private static string _service = "Service.svc/CheckService";
 
-    public CheckServicePostTests()
+    public CheckServiceTests()
     {
         
         _body = new StringContent("");
@@ -25,21 +26,21 @@ public class CheckServiceTests
     [Theory]
     [MemberData(nameof(AllCfgGames))]
     //[InlineData("003")]
-    public async Task NextDataDev(string idGame)
+    public async Task NextDataDev_Post_ShouldReturnOK_WhenServiceIsRunning(string idGame)
     {
         await Task.Delay(_delay);
         string envUrl = "dev.next-data.cz:8";
-        string url = $"https://{envUrl}{idGame}/Game{idGame}Service.svc/CheckService";
+        string url = $"https://{envUrl}{idGame}/Game{idGame}{_service}";
         var response = await _client.PostAsync(url,_body);
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
     [Theory]
     [MemberData(nameof(SazkaCfgGames))]
     //[InlineData("050")]
-    public async Task SazkaStage(string idGame)
+    public async Task SazkaStage_Post_ShouldReturnOK_WhenServiceIsRunning(string idGame)
     {
         string envUrl = "stagekartac.adell-trading.cz/G";
-        string url = $"https://{envUrl}{idGame}/Game{idGame}Service.svc/CheckService";
+        string url = $"https://{envUrl}{idGame}/Game{idGame}{_service}";
         var response = await _client.PostAsync(url,_body);
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
@@ -50,7 +51,7 @@ public class CheckServiceTests
     public async Task KartacStage(string idGame)
     {
         string envUrl = "stagesazka.adell-trading.cz/G";
-        string url = $"https://{envUrl}{idGame}/Game{idGame}Service.svc/CheckService";
+        string url = $"https://{envUrl}{idGame}/Game{idGame}{_service}";
         var response = await _client.PostAsync(url,_body);
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
